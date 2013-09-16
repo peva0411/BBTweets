@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html ng-app="ngBBTweets">
+	<head>
+		<title>BB Tweets</title>
+		<link href="styles/bootstrap.min.css" rel='stylesheet'>
+		<link href="styles/billsCustom.css" rel='stylesheet'>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-resource.min.js"></script>
+		<script src="js/ng-billstweets/app.js" ></script>
+	</head>
+
+	<body style="margin-top:50px;">
+		<header role="banner" class="navbar navbar-inverse navbar-fixed-top navbar-bills">
+			<div class="container">
+				<div class="navbar-header">
+					<a href="./" class="navbar-brand navbar-brand-bills">Buffalo Bill's Tweets</a>
+				</div>
+			</div>
+		</header> 
+		<main>
+			<div ng-controller="countCtrl" class="container">
+				<div>Positive: [[countPositive.count]]</div>
+				<div>Negative: [[countNegative.count]]</div>
+				<div>Total: [[countTotal.count]]</div>
+
+				<ul style="list-style-type: none;">
+					<li ng-repeat="tweet in tweets">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div>
+									<div>[[tweet.date]]</div>
+									<div>[[tweet.sentiment]]</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<img ng-src="[[tweet.user.profile_image_url]]"/>
+								[[tweet.text]]
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</main>
+	</body>
+</html>
