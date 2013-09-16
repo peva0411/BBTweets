@@ -21,6 +21,7 @@ MongoClient.connect('mongodb://peva0411-ubuntu.cloudapp.net:27017/twitter', func
 
 	routes(app, db);
 
-	app.listen(1337);
-	console.log('Express server listening on port 1337');
+	var port = process.env.PORT || 1337;
+	app.listen(port);
+	console.log('Express server listening on port ' + port);
 });
