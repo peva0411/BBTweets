@@ -3,6 +3,7 @@
 <html ng-app="ngBBTweets">
 	<head>
 		<title>BB Tweets</title>
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
 		<link href="styles/bootstrap.min.css" rel='stylesheet'>
 		<link href="styles/billsCustom.css" rel='stylesheet'>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
@@ -10,7 +11,7 @@
 		<script src="js/ng-billstweets/tweetApp.js" ></script>
 	</head>
 
-	<body style="margin-top:50px;">
+	<body style="margin-top:50px; margin-left:0; margin-right:0; margin-bottom:0;">
 		<header role="banner" class="navbar navbar-inverse navbar-fixed-top navbar-bills">
 			<div class="container">
 				<div class="navbar-header">
@@ -19,12 +20,29 @@
 			</div>
 		</header> 
 		<main>
-			<div ng-controller="countCtrl" class="container">
-				<div>Positive: [[countPositive.count]]</div>
-				<div>Negative: [[countNegative.count]]</div>
-				<div>Total: [[countTotal.count]]</div>
+			<div ng-controller="countCtrl">
+			 	<div class="row tweet-header">
+			 			<div class="col-md-4 linediv-l">
+			 				<div class="tweet-stat ">
+			 					<h2>[[countPositive.count | number]]</h2>
+			 					<p> Positive </p>	
+			 				</div>
+			 			</div>
+						<div class="col-md-4">
+							<div class="tweet-stat">
+								<h2>[[countTotal.count | number]]</h2>
+								<p>Total</p>
+							</div>
+						</div>
+						<div class="col-md-4 linediv-r">
+							<div class="tweet-stat">
+								<h2>[[countNegative.count | number]]</h2>
+								<p>Negative</p>
+							</div>
+						</div>
+			 	</div>
 
-				<ul style="list-style-type: none;">
+				<ul style="margin-top:15px; list-style-type: none;">
 					<li ng-repeat="tweet in tweets">
 						<div class="panel panel-default">
 							<div class="panel-heading">
