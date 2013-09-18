@@ -1,4 +1,4 @@
-var ngBBTweets = angular.module("ngBBTweets", ['ngResource'], function($interpolateProvider){
+var ngBBTweets = angular.module("ngBBTweets", ['ngResource', ], function($interpolateProvider){
 		$interpolateProvider.startSymbol('[[');
 		$interpolateProvider.endSymbol(']]');
 	});
@@ -12,7 +12,21 @@ ngBBTweets.factory("Tweets", function($resource){
 	}
 });
 
-ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets){
+ngBBTweets.factory("socket", function($rootScope, $timeout){
+	var socket = io.connect();
+	return {
+		on:function(eventName, callback){
+			socket.on(eventName, function(){
+				var args = arguments;
+				$rootScope.$apply(function(){
+					callback.apply(socket, args);
+				});
+			});
+		}
+	};
+});
+
+ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
 	
 	$scope.tweets = []; 
 	$scope.tweets = Tweets.tweets.query({tweets:10});
@@ -21,5 +35,7 @@ ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets){
  	$scope.countNegative = Tweets.countNegative.get();
  	$scope.countTotal = Tweets.countTotal.get();
 
+ 	socket.on('send:count', function(data){
+ 		$scope.countTotal =  JSON.parse(data.count);
+ 	});
 });
-

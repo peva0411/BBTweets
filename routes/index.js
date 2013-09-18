@@ -1,6 +1,6 @@
 var ContentHandler =  require('./content');
 
-module.exports = exports = function(app, db){
+module.exports = exports = function(app, db, io){
 
 	var contentHandler = new ContentHandler(db);
 
@@ -9,4 +9,6 @@ module.exports = exports = function(app, db){
 	app.get('/tweets-api/count/:sentimentStatus', contentHandler.displayCount);
 
 	app.get('/tweets-api/tweets/:tweets', contentHandler.displayTweets);
+
+	
 }

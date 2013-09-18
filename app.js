@@ -2,7 +2,9 @@ var express = require("express")
     ,app = express() //web framework
     ,cons = require('consolidate')
     ,MongoClient = require('mongodb').MongoClient //mongo driver
-    ,routes = require('./routes'); //routes for application
+    ,routes = require('./routes')
+    ,server = require('http').createServer(app)
+    ,io = require('socket.io').listen(server); //routes for application
 
 //connect to mongo instance and db
 MongoClient.connect('mongodb://peva0411-ubuntu.cloudapp.net:27017/twitter', function(err,db){
@@ -18,10 +20,20 @@ MongoClient.connect('mongodb://peva0411-ubuntu.cloudapp.net:27017/twitter', func
 
 	//Express middleware to populate 'req.body' so we can access post variables
 	app.use(express.bodyParser());
+	app.use(express.errorHandler());
+	routes(app, db, io);
 
-	routes(app, db);
+	io.sockets.on('connection', function(socket){
+		setInterval(function(){
+			socket.emit('send:count',{
+				'count': 10001
+			});
+
+	    }, 10000);
+	});
 
 	var port = process.env.PORT || 1337;
-	app.listen(port);
-	console.log('Express server listening on port ' + port);
+	server.listen(port, function(){
+		console.log('Express server listening on port ' + port);
+	})
 });

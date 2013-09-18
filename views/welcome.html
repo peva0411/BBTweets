@@ -6,6 +6,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
 		<link href="styles/bootstrap.min.css" rel='stylesheet'>
 		<link href="styles/billsCustom.css" rel='stylesheet'>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-resource.min.js"></script>
 		<script src="js/ng-billstweets/tweetApp.js" ></script>
@@ -30,7 +31,7 @@
 			 			</div>
 						<div class="col-md-4">
 							<div class="tweet-stat">
-								<h2>[[countTotal.count | number]]</h2>
+								<h2>[[countTotal.count]]</h2>
 								<p>Total</p>
 							</div>
 						</div>

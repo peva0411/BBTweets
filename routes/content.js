@@ -12,7 +12,7 @@ function ContentHandler(db){
 
 	this.displayCount = function(req, res, next){
 		"use strict";
-		var sentimentStatus = req.params.sentimentStatus;
+		var sentimentStatus = req.params.sentimentStatus || "total";
 		tweets.getTweetCount(sentimentStatus, function(err, results){
 			if (err) return next(err);
 
