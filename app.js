@@ -21,16 +21,8 @@ MongoClient.connect('mongodb://peva0411-ubuntu.cloudapp.net:27017/twitter', func
 	//Express middleware to populate 'req.body' so we can access post variables
 	app.use(express.bodyParser());
 	app.use(express.errorHandler());
+
 	routes(app, db, io);
-
-	io.sockets.on('connection', function(socket){
-		setInterval(function(){
-			socket.emit('send:count',{
-				'count': 10001
-			});
-
-	    }, 10000);
-	});
 
 	var port = process.env.PORT || 1337;
 	server.listen(port, function(){

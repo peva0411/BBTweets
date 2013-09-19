@@ -1,4 +1,4 @@
-var ngBBTweets = angular.module("ngBBTweets", ['ngResource', ], function($interpolateProvider){
+var ngBBTweets = angular.module("ngBBTweets", ['ngResource',"tweet.socket-io"], function($interpolateProvider){
 		$interpolateProvider.startSymbol('[[');
 		$interpolateProvider.endSymbol(']]');
 	});
@@ -12,19 +12,31 @@ ngBBTweets.factory("Tweets", function($resource){
 	}
 });
 
-ngBBTweets.factory("socket", function($rootScope, $timeout){
-	var socket = io.connect();
-	return {
-		on:function(eventName, callback){
-			socket.on(eventName, function(){
-				var args = arguments;
-				$rootScope.$apply(function(){
-					callback.apply(socket, args);
-				});
-			});
-		}
-	};
-});
+// ngBBTweets.factory("socket", function($rootScope, $timeout){
+// 	var socket = io.connect();
+// 	return {
+// 		on:function(eventName, callback){
+// 			socket.on(eventName, function(){
+// 				var args = arguments;
+// 				$rootScope.$apply(function(){
+// 					if (callback){
+// 						callback.apply(socket, args);
+// 					}
+// 				});
+// 			});
+// 		},
+// 		emit: function(eventName, data, callback){
+// 			socket.emit(eventName, data, function(){
+// 				var args = arguments;
+// 				$rootScope.$apply(function(){
+// 					if (callback){
+// 						callback.apply(socket, args);
+// 					}
+// 				});
+// 			});
+// 		}
+// 	};
+// });
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
 	
@@ -36,6 +48,8 @@ ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
  	$scope.countTotal = Tweets.countTotal.get();
 
  	socket.on('send:count', function(data){
- 		$scope.countTotal =  JSON.parse(data.count);
+ 		console.log(JSON.parse(data.count));
+ 		$scope.countTotal = {};
+ 		$scope.countTotal = {"count":data.count};
  	});
 });
