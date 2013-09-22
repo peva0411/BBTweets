@@ -19,8 +19,21 @@ module.exports = exports = function(app, db, io){
 			socket.emit('send:count', {"count":data})
 		};
 
+		var sendPositiveCount = function(err, data){
+			socket.emit('send:countPositive', {'count':data});
+		};
+
+		var sendNegativeCount = function(err, data){
+			socket.emit('send:countNegative', {'count':data});
+		};
+
 		setInterval(function(){
 			tweets.getTweetCount("total", sendCount);
-	    }, 5000);
+	    }, 10000);
+
+	    setInterval(function () {
+	    	tweets.getTweetCount("negative", sendNegativeCount);
+	    	tweets.getTweetCount("positive", sendPositiveCount);
+	    }, 15000);
 	});
 }

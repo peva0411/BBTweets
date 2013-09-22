@@ -20,7 +20,10 @@ MongoClient.connect('mongodb://peva0411-ubuntu.cloudapp.net:27017/twitter', func
 
 	//Express middleware to populate 'req.body' so we can access post variables
 	app.use(express.bodyParser());
-	app.use(express.errorHandler());
+
+	if (app.get('env') === 'development'){
+		app.use(express.errorHandler());
+	}
 
 	routes(app, db, io);
 

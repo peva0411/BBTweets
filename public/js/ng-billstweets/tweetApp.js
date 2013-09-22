@@ -48,8 +48,20 @@ ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
  	$scope.countTotal = Tweets.countTotal.get();
 
  	socket.on('send:count', function(data){
- 		console.log(JSON.parse(data.count));
+ 		console.log("Total count Updated: " + JSON.parse(data.count));
  		$scope.countTotal = {};
  		$scope.countTotal = {"count":data.count};
+ 	});
+
+ 	socket.on('send:countNegative', function(data){
+ 		console.log("Negative Tweet Count Updated: " + data.count);
+ 		$scope.countNegative = {};
+ 		$scope.countNegative = {"count":data.count};
+ 	});
+
+ 	socket.on('send:countPositive', function(data){
+ 		console.log("Positive Tweet Count Updated: " + data.count);
+ 		$scope.countPositive = {};
+ 		$scope.countPositive = {"count":data.count};
  	});
 });
