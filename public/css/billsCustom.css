@@ -3,6 +3,7 @@
   	background-color: #12487b;
   	border-color: #da2128;
   	box-shadow: 0 1px 0 rgba(255,255,255,.1);
+  	font-family: 'Ubuntu', sans-serif;
 }
 
 .navbar-bills .navbar-brand-bills{
@@ -16,6 +17,11 @@
 }
 
 .tweet-stat{
+	font-family: 'Ubuntu', sans-serif;
+	color: white;
+}
+
+.tweet-stat h2{
 	font-family: 'Ubuntu', sans-serif;
 	color: white;
 }
