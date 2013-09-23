@@ -9,7 +9,7 @@ module.exports = exports = function(app, db, io){
 
 	app.get('/tweets-api/count/:sentimentStatus', contentHandler.displayCount);
 
-	app.get('/tweets-api/tweets/:tweets', contentHandler.displayTweets);
+	app.get('/tweets-api/tweets/:tweets/:skip/:year/:month/:day/:hours/:minutes/:seconds', contentHandler.displayTweets);
 
 	io.sockets.on('connection', function(socket){
 		var tweets = new TweetsDAO(db);

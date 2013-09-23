@@ -1,11 +1,11 @@
-var ngBBTweets = angular.module("ngBBTweets", ['ngResource',"tweet.socket-io"], function($interpolateProvider){
+var ngBBTweets = angular.module("ngBBTweets", ['ngResource',"tweet.socket-io", 'infinite-scroll'], function($interpolateProvider){
 		$interpolateProvider.startSymbol('[[');
 		$interpolateProvider.endSymbol(']]');
 	});
 
 ngBBTweets.factory("Tweets", function($resource){
 	return {
-		tweets : $resource("/tweets-api/tweets/:tweets"),
+		tweets : $resource("/tweets-api/tweets/:tweets/:skip/:year/:month/:day/:hours/:minutes/:seconds"),
 		countPositive: $resource("/tweets-api/count/positive"),
 		countNegative: $resource("/tweets-api/count/negative"),
         countTotal: $resource("/tweets-api/count/total")
@@ -40,8 +40,33 @@ ngBBTweets.factory("Tweets", function($resource){
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
 	
+	$scope.count = 10;
+	$scope.current = 0;
+	$scope.startDate = new Date();
 	$scope.tweets = []; 
-	$scope.tweets = Tweets.tweets.query({tweets:10});
+	$scope.busy = false;
+	// $scope.tweets = Tweets.tweets.query({tweets:$scope.count, skip:$scope.current}, function(){
+	// 	$scope.current += $scope.count;
+	// });
+
+	$scope.loadMore = function(){
+		 if ($scope.busy)return;
+		 $scope.busy = true;
+		 var updateTweets = Tweets.tweets.query({tweets:$scope.count, skip:$scope.current, 
+		 	  year:$scope.startDate.getUTCFullYear(), 
+		 	  month:$scope.startDate.getUTCMonth(),
+		 	  day:$scope.startDate.getUTCDate(),
+		 	  hours:$scope.startDate.getUTCHours(),
+		 	  minutes:$scope.startDate.getUTCMinutes(),
+		 	  seconds:$scope.startDate.getUTCSeconds()}, function(){
+			//console.log(updateTweets);
+			var newTweets = $scope.tweets.concat(updateTweets);
+			updateTweets = [];
+			$scope.tweets = newTweets;
+			$scope.current += $scope.count;
+			$scope.busy = false;
+		});
+	};
 
 	$scope.countPositive = Tweets.countPositive.get();
  	$scope.countNegative = Tweets.countNegative.get();
