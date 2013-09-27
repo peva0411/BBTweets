@@ -11,8 +11,12 @@ module.exports = exports = function(app, db, io){
 
 	app.get('/tweets-api/tweets/:tweets/:skip/:year/:month/:day/:hours/:minutes/:seconds', contentHandler.displayTweets);
 
+	var connections = 0;
+
 	io.sockets.on('connection', function(socket){
 		var tweets = new TweetsDAO(db);
+
+		connections++;
 
 		var sendCount = function(err, data){
 			console.log(data);
@@ -27,13 +31,21 @@ module.exports = exports = function(app, db, io){
 			socket.emit('send:countNegative', {'count':data});
 		};
 
+		socket.on('disconnect', function(){
+			console.log('client disconnected');
+			connections--;
+		});
+
 		setInterval(function(){
-			tweets.getTweetCount("total", sendCount);
+			if (connections > 0) 
+				tweets.getTweetCount("total", sendCount);
 	    }, 10000);
 
 	    setInterval(function () {
-	    	tweets.getTweetCount("negative", sendNegativeCount);
-	    	tweets.getTweetCount("positive", sendPositiveCount);
+	    	if (connections > 0){
+	    		tweets.getTweetCount("negative", sendNegativeCount);
+	    		tweets.getTweetCount("positive", sendPositiveCount);
+	    	}
 	    }, 15000);
 	});
 }
