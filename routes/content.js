@@ -31,7 +31,22 @@ function ContentHandler(db){
 
 		   return res.json(results);
 		  });
-	}	
+	}
+
+	this.displayTweetsByMilli = function(req, res, next){
+		"use strict";
+
+		var numTweets = req.params.tweets;
+		var skipTweets = req.params.skip;
+		var startDate = new Date(parseInt(req.params.milli));
+		console.log(startDate);
+		tweets.getTweets(numTweets, skipTweets, startDate, function(err, results){
+		   if (err) return next(err);
+
+		   return res.json(results);
+		  });
+	}
+
 }
 
 module.exports = ContentHandler;

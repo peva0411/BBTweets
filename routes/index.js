@@ -11,6 +11,8 @@ module.exports = exports = function(app, db, io){
 
 	app.get('/tweets-api/tweets/:tweets/:skip/:year/:month/:day/:hours/:minutes/:seconds', contentHandler.displayTweets);
 
+	app.get('/tweets-api/tweets/:tweets/:skip/:milli', contentHandler.displayTweetsByMilli);
+
 	var connections = 0;
 
 	io.sockets.on('connection', function(socket){

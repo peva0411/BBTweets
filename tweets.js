@@ -9,6 +9,9 @@ function TweetsDAO(db){
 
 	this.getTweets = function(num, skip, startDate, callback){
 		"use strict";
+		//var isoStartDate = startDate.toISOString();
+		//console.log("ISO Date " + isoStartDate);
+		console.log("Date String " + startDate);
 		console.log("Num Tweets: " + num + " , Skipped: " + skip + " StartDAte: " + startDate);
 
 		var skipInt = parseInt(skip);

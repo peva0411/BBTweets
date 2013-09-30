@@ -5,7 +5,7 @@ var ngBBTweets = angular.module("ngBBTweets", ['ngResource',"tweet.socket-io", '
 
 ngBBTweets.factory("Tweets", function($resource){
 	return {
-		tweets : $resource("/tweets-api/tweets/:tweets/:skip/:year/:month/:day/:hours/:minutes/:seconds"),
+		tweets : $resource("/tweets-api/tweets/:tweets/:skip/:milli"),
 		countPositive: $resource("/tweets-api/count/positive"),
 		countNegative: $resource("/tweets-api/count/negative"),
         countTotal: $resource("/tweets-api/count/total")
@@ -39,12 +39,13 @@ ngBBTweets.factory("Tweets", function($resource){
 // });
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
-	
+	$scope.countInit = {count: 0};
 	$scope.count = 10;
 	$scope.current = 0;
 	$scope.startDate = new Date();
 	$scope.tweets = []; 
 	$scope.busy = false;
+	$scope.difference = 0;
 	// $scope.tweets = Tweets.tweets.query({tweets:$scope.count, skip:$scope.current}, function(){
 	// 	$scope.current += $scope.count;
 	// });
@@ -52,13 +53,9 @@ ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
 	$scope.loadMore = function(){
 		 if ($scope.busy)return;
 		 $scope.busy = true;
+		 var milliTime = $scope.startDate.getTime();
 		 var updateTweets = Tweets.tweets.query({tweets:$scope.count, skip:$scope.current, 
-		 	  year:$scope.startDate.getUTCFullYear(), 
-		 	  month:$scope.startDate.getUTCMonth(),
-		 	  day:$scope.startDate.getUTCDate(),
-		 	  hours:$scope.startDate.getUTCHours(),
-		 	  minutes:$scope.startDate.getUTCMinutes(),
-		 	  seconds:$scope.startDate.getUTCSeconds()}, function(){
+		 	  milli: milliTime}, function(){
 			//console.log(updateTweets);
 			var newTweets = $scope.tweets.concat(updateTweets);
 			updateTweets = [];
@@ -68,14 +65,25 @@ ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
 		});
 	};
 
+	$scope.refreshTweets = function(){
+		$scope.startDate = new Date();
+		$scope.difference = 0;
+		$scope.countInit.count = $scope.countTotal.count;
+		$scope.loadMore();
+	}
+
 	$scope.countPositive = Tweets.countPositive.get();
  	$scope.countNegative = Tweets.countNegative.get();
- 	$scope.countTotal = Tweets.countTotal.get();
-
+ 	$scope.countTotal = Tweets.countTotal.get({}, function(){
+ 		$scope.countInit.count = $scope.countTotal.count;
+ 	});
+ 	//$scope.countInit.count = $scope.countTotal.count;
+ 	
  	socket.on('send:count', function(data){
- 		console.log("Total count Updated: " + JSON.parse(data.count));
- 		$scope.countTotal = {};
- 		$scope.countTotal = {"count":data.count};
+ 		
+ 		$scope.countTotal.count = data.count;
+ 		$scope.difference = data.count - $scope.countInit.count;
+
  	});
 
  	socket.on('send:countNegative', function(data){
