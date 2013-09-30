@@ -7,12 +7,16 @@ function TweetsDAO(db){
 
 	var tweets = db.collection("BillsTweets");
 
-	this.getTweets = function(num, callback){
+	this.getTweets = function(num, skip, startDate, callback){
 		"use strict";
-		console.log(num);
+		//var isoStartDate = startDate.toISOString();
+		//console.log("ISO Date " + isoStartDate);
+		console.log("Date String " + startDate);
+		console.log("Num Tweets: " + num + " , Skipped: " + skip + " StartDAte: " + startDate);
 
+		var skipInt = parseInt(skip);
 		var numInt = parseInt(num);
-		tweets.find().sort('date', -1).limit(numInt).toArray(function(err, items){
+		tweets.find({'date':{$lt: startDate}}).sort('date', -1).skip(skipInt).limit(numInt).toArray(function(err, items){
 			if (err) return callback(err, null);
 
 			console.log("Found " + items.length + " tweets");
