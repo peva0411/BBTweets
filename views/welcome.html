@@ -46,25 +46,31 @@
 						</div>
 			 	</div>
 
-			 	<!-- <div ng-show="difference">
-			 		<span class="badge">[[difference]]</span>
-			 	</div> -->
+				 	<div  style="padding: 20px;">
 
+					 	 <div class='well well-sm' ng-animate="'animate'" ng-show="needRefresh()">
+					 	 	<span>
+					 			<span class="badge">[[difference]]</span>
+					 			more tweets have been found. 
+					 			<btn class='btn btn-primary btn-bills' ng-click="refreshTweets()">Refresh</btn>
+					 		</span>	
+					 	</div> 
 
-				<div infinite-scroll='loadMore()' infinite-scroll-distance='2' style="margin-top:15px; padding: 20px;">
-					<div ng-repeat="tweet in tweets">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<div>
-									<div>[[tweet.date | date:'medium']]</div>
-									<div>Sentiment: [[tweet.sentiment]]</div>
+						<div infinite-scroll='loadMore()' infinite-scroll-distance='2' style="margin-top:15px;">
+							<div ng-repeat="tweet in tweets">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<div>
+											<div>[[tweet.date | date:'medium']]</div>
+											<div>Sentiment: [[tweet.sentiment]]</div>
+										</div>
+									</div>
+									<div class="panel-body">
+										<img ng-src="[[tweet.user.profile_image_url]]"/>
+										[[tweet.text]]
+									</div>
 								</div>
 							</div>
-							<div class="panel-body">
-								<img ng-src="[[tweet.user.profile_image_url]]"/>
-								[[tweet.text]]
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

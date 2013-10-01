@@ -1,3 +1,22 @@
+.animate-show{
+	-webkit-transition: ls linear all;
+	transition: 1s linear all;
+	opacity: 0;
+}
+
+.animate-show .animate-enter-active{
+	opacity: 1;
+}
+
+.animate-hide {
+	opacity: 0;
+}
+
+.btn-bills{
+	background-color: #12487b;
+	border-color: #12487b;
+}
+
 .navbar-bills{
 	text-shadow: 0 -1px 0 rgba(0,0,0,.15);
   	background-color: #12487b;
@@ -27,7 +46,7 @@
 }
 
 /*Landscape phones and down*/
-@media (max-width: 480px){
+@media (max-width: 980px){
 	.linediv-r{
 		border-top: 1px white solid;
 	}
