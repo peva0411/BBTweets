@@ -47,11 +47,12 @@
 			 	</div>
 
 				 	<div  style="padding: 20px;">
-					 	 <div class='well well-sm' ng-show="difference">
+
+					 	 <div class='well well-sm' ng-animate="'animate'" ng-show="needRefresh()">
 					 	 	<span>
 					 			<span class="badge">[[difference]]</span>
 					 			more tweets have been found. 
-					 			<btn class='btn btn-primary' ng-click="refreshTweets()">Refresh</btn>
+					 			<btn class='btn btn-primary btn-bills' ng-click="refreshTweets()">Refresh</btn>
 					 		</span>	
 					 	</div> 
 

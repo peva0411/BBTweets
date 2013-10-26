@@ -71,6 +71,10 @@ ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
 		 	  milli: milliTime});
 	}
 
+	$scope.needRefresh = function(){
+		return ($scope.difference > 1);
+	}
+
 	$scope.countPositive = Tweets.countPositive.get();
  	$scope.countNegative = Tweets.countNegative.get();
  	$scope.countTotal = Tweets.countTotal.get({}, function(){
