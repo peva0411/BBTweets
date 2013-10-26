@@ -4,10 +4,14 @@ var express = require("express")
     ,MongoClient = require('mongodb').MongoClient //mongo driver
     ,routes = require('./routes')
     ,server = require('http').createServer(app)
-    ,io = require('socket.io').listen(server); //routes for application
+    ,io = require('socket.io').listen(server) //routes for application
+    ,nconf = require('nconf');
+
+nconf.file('settings.json').env();
+var connectionString = nconf.get('connectionString');
 
 //connect to mongo instance and db
-MongoClient.connect('mongodb://peva0411-ubuntu.cloudapp.net:27017/twitter', function(err,db){
+MongoClient.connect(connectionString, function(err,db){
 	"use strict";
 	if (err) throw err;
 	

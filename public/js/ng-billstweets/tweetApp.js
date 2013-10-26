@@ -12,31 +12,27 @@ ngBBTweets.factory("Tweets", function($resource){
 	}
 });
 
-// ngBBTweets.factory("socket", function($rootScope, $timeout){
-// 	var socket = io.connect();
-// 	return {
-// 		on:function(eventName, callback){
-// 			socket.on(eventName, function(){
-// 				var args = arguments;
-// 				$rootScope.$apply(function(){
-// 					if (callback){
-// 						callback.apply(socket, args);
-// 					}
-// 				});
-// 			});
-// 		},
-// 		emit: function(eventName, data, callback){
-// 			socket.emit(eventName, data, function(){
-// 				var args = arguments;
-// 				$rootScope.$apply(function(){
-// 					if (callback){
-// 						callback.apply(socket, args);
-// 					}
-// 				});
-// 			});
-// 		}
-// 	};
-// });
+ngBBTweets.directive("tweetText", function(){
+	
+	var validElement = angular.element("<div><p>[[tweet.text]]</p></div>")
+
+	return {
+		restrict:"E",
+		replace: true,
+		template:'<div><p>[[tweet.text]]</p></div>',
+		link: function(scope, element, attrs){
+			attrs.$observe('tweet', function(tweet){
+				scope.tweet = tweet;
+				// var tweetWords = scope.tweet.text.split(" ");
+				
+				// angular.forEach(tweetWords, function(word){
+				// 	var newElement = angular.element('<span class="label label-success">' + word + '</span>');
+				// 	element.childern(1).append(newElement);
+				// });
+			});
+		}
+	};
+});
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
 	$scope.countInit = {count: 0};
