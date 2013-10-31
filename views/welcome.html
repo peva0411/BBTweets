@@ -19,66 +19,12 @@
 		<header role="banner" class="navbar navbar-inverse navbar-fixed-top navbar-bills">
 			<div class="container">
 				<div class="navbar-header">
-					<a href="./" class="navbar-brand navbar-brand-bills">Buffalo Bill's Tweets</a>
+					<a class="navbar-brand navbar-brand-bills">Buffalo Bill's Tweets</a>
 				</div>
 			</div>
 		</header> 
 		<main>
-			<div ng-controller="countCtrl">
-			 	<div class="row tweet-header">
-			 			<div class="col-md-4 linediv-l">
-			 				<div class="tweet-stat ">
-			 					<h2>[[countPositive.count | number]]</h2>
-			 					<p> Positive </p>	
-			 				</div>
-			 			</div>
-						<div class="col-md-4">
-							<div class="tweet-stat">
-								<h2>[[countTotal.count | number]]</h2>
-								<p>Total</p>
-							</div>
-						</div>
-						<div class="col-md-4 linediv-r">
-							<div class="tweet-stat">
-								<h2>[[countNegative.count | number]]</h2>
-								<p>Negative</p>
-							</div>
-						</div>
-			 	</div>
-
-				 	<div  style="padding: 20px;">
-
-					 	 <div class='well well-sm' ng-animate="'animate'" ng-show="needRefresh()">
-					 	 	<span>
-					 			<span class="badge">[[difference]]</span>
-					 			more tweets have been found. 
-					 			<btn class='btn btn-primary btn-bills' ng-click="refreshTweets()">Refresh</btn>
-					 		</span>	
-					 	</div> 
-
-						<div infinite-scroll='loadMore()' infinite-scroll-distance='2' style="margin-top:15px;">
-							<div ng-repeat="tweet in tweets">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<div>
-											<div>[[tweet.date | date:'medium']]</div>
-											<div>Sentiment: [[tweet.sentiment]]</div>
-										</div>
-									</div>
-									<div class="panel-body">
-										<img ng-src="[[tweet.user.profile_image_url]]"/>
-										[[tweet.text]]
-										<div>
-											<ul ng-repeat="positiveWord in tweet.positiveWords">
-												<li>[[positiveWord.word]] : [[positiveWord.score]]</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-					</div>
-				</div>
-			</div>
+			<div ng-view></div>
 		</main>
 	</body>
 </html>

@@ -3,8 +3,24 @@ var ngBBTweets = angular.module("ngBBTweets", ['ngResource',"tweet.socket-io", '
 		$interpolateProvider.endSymbol(']]');
 	});
 
+ngBBTweets.config(['$routeProvider', 
+	function($routeProvider){
+		$routeProvider.when('/tweets',{
+			templateUrl : 'js/ng-billstweets/partials/tweet-list.html',
+			controller: 'countCtrl'
+		}).
+		when('/tweets/:tweetId', {
+			templateUrl : 'js/ng-billstweets/partials/tweet-detail.html',
+			controller : 'tweetDetailCtrl'
+		}).
+		otherwise({
+			redirectTo: '/tweets'
+		});
+	}])
+
 ngBBTweets.factory("Tweets", function($resource){
 	return {
+		tweet: $resource("/tweets-api/tweets/:id"),
 		tweets : $resource("/tweets-api/tweets/:tweets/:skip/:milli"),
 		countPositive: $resource("/tweets-api/count/positive"),
 		countNegative: $resource("/tweets-api/count/negative"),
@@ -32,6 +48,12 @@ ngBBTweets.directive("tweetText", function(){
 			});
 		}
 	};
+});
+
+ngBBTweets.controller("tweetDetailCtrl", function tweetDetailCtrl($scope,$routeParams, Tweets){
+	$scope.tweetId = $routeParams.tweetId
+
+	$scope.tweet = Tweet.
 });
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
