@@ -13,6 +13,10 @@ ngBBTweets.config(['$routeProvider',
 			templateUrl : 'js/ng-billstweets/partials/tweet-detail.html',
 			controller : 'tweetDetailCtrl'
 		}).
+		when('/users/:userId',{
+			templateUrl : 'js/ng-billstweets/partials/user-detail.html',
+			controller : 'userDetailCtrl'
+		}).
 		otherwise({
 			redirectTo: '/tweets'
 		});
@@ -20,6 +24,7 @@ ngBBTweets.config(['$routeProvider',
 
 ngBBTweets.factory("Tweets", function($resource){
 	return {
+		userTweets: $resource("/tweets-api/tweets/user/:id"),
 		tweet: $resource("/tweets-api/tweets/:id"),
 		tweets : $resource("/tweets-api/tweets/:tweets/:skip/:milli"),
 		countPositive: $resource("/tweets-api/count/positive"),
@@ -53,7 +58,21 @@ ngBBTweets.directive("tweetText", function(){
 ngBBTweets.controller("tweetDetailCtrl", function tweetDetailCtrl($scope,$routeParams, Tweets){
 	$scope.tweetId = $routeParams.tweetId
 
-	$scope.tweet = Tweet.
+	$scope.styleImg = function(media){
+		return {
+			width:media.sizes.medium.w,
+			height:media.sizes.medium.h
+			}
+	}
+
+	//$scope.wordScores = $scope.tweet.positiveWords.concat($scope.tweet.negativeWords);
+	$scope.tweet = Tweets.tweet.get({id:$scope.tweetId});
+});
+
+ngBBTweets.controller('userDetailCtrl', function tweetUserCtrl($scope, $routeParams, Tweets){
+	$scope.userId = $routeParams.userId;
+
+	$scope.tweets = Tweets.userTweets.query({id:$scope.userId});
 });
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){

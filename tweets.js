@@ -7,6 +7,23 @@ function TweetsDAO(db){
 
 	var tweets = db.collection("BillsTweets");
 
+	this.getTweet = function(id, callback){
+		tweets.findOne({'id':parseInt(id)}, function(err, result){
+			if (err) return callback(err, null);
+
+			callback(err, result);
+		});
+	}
+
+	this.getUserTweets = function(id, callback){
+		//limit 10 for now 
+		tweets.find({"user.id":parseInt(id)}).limit(10).toArray(function(err, items){
+			if (err) return callback(err, null);
+
+			callback(err, items);
+		});
+	}
+
 	this.getTweets = function(num, skip, startDate, callback){
 		"use strict";
 		//var isoStartDate = startDate.toISOString();
@@ -43,4 +60,5 @@ function TweetsDAO(db){
 		});
 	}
 }
+
 module.exports.TweetsDAO = TweetsDAO;

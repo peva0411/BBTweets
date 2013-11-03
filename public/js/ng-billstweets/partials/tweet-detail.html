@@ -1,1 +1,151 @@
-Tweet Id: <div>[[tweetId]]</div>
+<div class="container" style="padding-top: 10px;">
+	<ol class="breadcrumb">
+		<li><a href="#">Tweets</a></li>
+		<li class="active">Details</li>
+	</ol>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="media">
+								<a class="pull-left" href="#">
+									<img class="img-circle media-object" ng-src="[[tweet.user.profile_image_url]]">
+								</a>
+								<div class="media-body">
+									<h4 class="media-heading">[[tweet.user.name]]</h4>
+									<a href="#">[['@' + tweet.user.screen_name]]</a>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default tweet-sentiment">
+						<div class="panel-heading">
+							<h4 class="center-text">Sentiment</h4>
+						</div>
+						<div class="panel-body center-text">
+							<h2 ng-class="{green:tweet.sentiment > 0, red : tweet.sentiment < 0}">
+								[[tweet.sentiment]]
+							</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="tweet.entities.hashtags.length > 0">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="center-text">Hashtags<h4/>
+						</div>
+						<div class="panel-body">
+							<span ng-repeat="hashtag in tweet.entities.hashtags">
+								<a href="#"><span class="label label-primary">[['#' + hashtag.text]]</span></a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="tweet.entities.user_mentions.length > 0">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="center-text">User Mentions</h4>
+						</div>
+						<div class="panel-body">
+							<span ng-repeat="user in tweet.entities.user_mentions">
+								<a href="#"><span class="label label-primary">[['@' + user.screen_name]]</span></a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="tweet.entities.urls.length > 0">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="center-text">Links</h4>
+						</div>
+						<div class="panel-body">
+							<div ng-repeat="url in tweet.entities.urls">
+								<a ng-href="[[url.url]]" target="_blank">[[url.display_url]]</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div>	
+								<h4>Tweet Text</h4>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div>
+								[[tweet.text]]
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="tweet.positiveWords.length > 0 || tweet.negativeWords.length > 0">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>Word Scores</h4>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<th>Word</th>
+												<th>Sentiment Score</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="wordScore in tweet.positiveWords">
+												<td>[[wordScore.word]]</td>
+												<td>[[wordScore.score]]</td>
+											</tr>
+											<tr ng-repeat="wordScore in tweet.negativeWords">
+												<td>[[wordScore.word]]</td>
+												<td>[[wordScore.score]]</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-show="tweet.entities.media.length > 0">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>Media</h4>
+						</div>
+						<div class="panel-body">
+							<div class="row" ng-repeat="media in tweet.entities.media">
+								<div class="col-md-12">
+									<img class="img-thumbnail" ng-src="[[media.media_url]]" ng-style="styleImg(media)">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

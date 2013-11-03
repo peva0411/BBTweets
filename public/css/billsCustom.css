@@ -45,6 +45,27 @@
 	color: white;
 }
 
+.center-text {
+	text-align: center;
+}
+
+.tweet-sentiment h2{
+	font-size: 6em;
+	font-family: 'Ubuntu', sans-serif;
+}
+
+.red {
+	color:red;
+}
+.green{
+	color:green;
+}
+
+.tweet-divider{
+	border-right: 1px #ddd solid;
+	padding-right: 10px;
+}
+
 /*Landscape phones and down*/
 @media (max-width: 980px){
 	.linediv-r{

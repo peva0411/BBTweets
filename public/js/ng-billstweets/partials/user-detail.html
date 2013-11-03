@@ -1,5 +1,7 @@
 <div>
-		 	<div class="row tweet-header">
+	[[tweets[0].user.id]]
+
+		 	<!-- <div class="row tweet-header">
 		 			<div class="col-md-4 linediv-l">
 		 				<div class="tweet-stat ">
 		 					<h2>[[countPositive.count | number]]</h2>
@@ -42,7 +44,7 @@
 									<div class="media">
 										<div class="pull-left tweet-divider">
 											<img class="media-object img-rounded" ng-src="[[tweet.user.profile_image_url]]"/>
-											<a href="#users/[[tweet.user.id]]">[['@' + tweet.user.screen_name]]</a> 
+											<a href="[[ #users/tweet.user.id]]">[['@' + tweet.user.screen_name]]</a> 
 										</div>
 										<div class="media-body">
 											[[tweet.text]]
@@ -56,5 +58,5 @@
 							</div>
 						</div>
 				</div>
-			</div>
+			</div> -->
 </div>

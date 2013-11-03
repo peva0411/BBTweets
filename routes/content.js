@@ -47,6 +47,26 @@ function ContentHandler(db){
 		  });
 	}
 
+	this.getTweet = function(req, res, next){
+		"use strict";
+
+		tweets.getTweet(req.params.id, function(err, results){
+			if (err) return next(err);
+
+			return res.json(results);
+		});
+	}
+
+	this.getUserTweets = function(req, res, next){
+		"use strict";
+
+		tweets.getUserTweets(req.params.id, function(err, results){
+			if (err) return next(err);
+
+			return res.json(results);
+		});
+	}
+
 }
 
 module.exports = ContentHandler;
