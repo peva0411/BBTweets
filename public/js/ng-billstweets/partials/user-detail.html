@@ -1,62 +1,72 @@
-<div>
-	[[tweets[0].user.id]]
-
-		 	<!-- <div class="row tweet-header">
-		 			<div class="col-md-4 linediv-l">
-		 				<div class="tweet-stat ">
-		 					<h2>[[countPositive.count | number]]</h2>
-		 					<p> Positive </p>	
-		 				</div>
-		 			</div>
-					<div class="col-md-4">
-						<div class="tweet-stat">
-							<h2>[[countTotal.count | number]]</h2>
-							<p>Total</p>
-						</div>
-					</div>
-					<div class="col-md-4 linediv-r">
-						<div class="tweet-stat">
-							<h2>[[countNegative.count | number]]</h2>
-							<p>Negative</p>
-						</div>
-					</div>
-		 	</div>
-
-			 	<div  style="padding: 20px;">
-
-				 	 <div class='well well-sm' ng-animate="'animate'" ng-show="needRefresh()">
-				 	 	<span>
-				 			<span class="badge">[[difference]]</span>
-				 			more tweets have been found. 
-				 			<btn class='btn btn-primary btn-bills' ng-click="refreshTweets()">Refresh</btn>
-				 		</span>	
-				 	</div> 
-					<div infinite-scroll='loadMore()' infinite-scroll-distance='2' style="margin-top:15px;">
-						<div ng-repeat="tweet in tweets">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<div>
-										<div class="pull-right">[[tweet.date | date:'medium']]</div>
-										<div><span> Sentiment:  <span ng-class="{green:tweet.sentiment > 0, red : tweet.sentiment < 0}">[[tweet.sentiment]]</span></span></div>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div class="media">
-										<div class="pull-left tweet-divider">
-											<img class="media-object img-rounded" ng-src="[[tweet.user.profile_image_url]]"/>
-											<a href="[[ #users/tweet.user.id]]">[['@' + tweet.user.screen_name]]</a> 
-										</div>
-										<div class="media-body">
-											[[tweet.text]]
-										</div>
-									</div>
-								<div>
-									<div class="pull-right">
-										<a href='#tweets/[[tweet.id]]'>Details</a>
-									</div>
+<div class="container" style="padding-top: 10px;">
+	<ol class="breadcrumb">
+		<li><a href="#">Tweets</a></li>
+		<li class="active">User Details</li>
+	</ol>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="media">
+								<a class="pull-left" href="#">
+									<img class="img-circle media-object" ng-src="[[user.profile_image_url]]">
+								</a>
+								<div class="media-body">
+									<h3 class="media-heading">[[user.name]]</h3>
+									<a href="#">[['@' + user.screen_name]]</a>
 								</div>
 							</div>
 						</div>
+					</div>	
 				</div>
-			</div> -->
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Tweets
+						</div>
+						<div class="panel-body">
+							<h2>[[tweetCount[0].tweets]]</h2>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Avg Sentiment
+						</div>
+						<div class="panel-body">
+							<h2>[[tweetCount[0].averageSent]]</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div ng-repeat="tweet in tweets">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div>
+							<div class="pull-right">[[tweet.date | date:'medium']]</div>
+							<div><span> Sentiment:  <span ng-class="{green:tweet.sentiment > 0, red : tweet.sentiment < 0}">[[tweet.sentiment]]</span></span></div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="media">
+							<div class="media-body">
+								[[tweet.text]]
+							</div>
+						</div>
+					<div>
+						<div class="pull-right">
+							<a href='#tweets/[[tweet.id]]'>Details</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

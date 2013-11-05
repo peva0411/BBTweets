@@ -20,6 +20,16 @@ function ContentHandler(db){
 		});
 	}
 
+	this.getUserTweetCount = function(req, res, next){
+		"use strict";
+
+		tweets.getUserAverage(req.params.id, function(err, result){
+			if (err) return next(err);
+
+			return res.json(result);
+		});
+	}
+
 	this.displayTweets = function(req , res, next){
 		"use strict";
 		var numTweets = req.params.tweets;

@@ -25,6 +25,7 @@ ngBBTweets.config(['$routeProvider',
 ngBBTweets.factory("Tweets", function($resource){
 	return {
 		userTweets: $resource("/tweets-api/tweets/user/:id"),
+		userTweetCount: $resource("/tweets-api/tweets/userCount/:id"),
 		tweet: $resource("/tweets-api/tweets/:id"),
 		tweets : $resource("/tweets-api/tweets/:tweets/:skip/:milli"),
 		countPositive: $resource("/tweets-api/count/positive"),
@@ -71,8 +72,13 @@ ngBBTweets.controller("tweetDetailCtrl", function tweetDetailCtrl($scope,$routeP
 
 ngBBTweets.controller('userDetailCtrl', function tweetUserCtrl($scope, $routeParams, Tweets){
 	$scope.userId = $routeParams.userId;
+	$scope.user = {};
 
-	$scope.tweets = Tweets.userTweets.query({id:$scope.userId});
+	$scope.tweetCount = Tweets.userTweetCount.query({id:$scope.userId});
+
+	$scope.tweets = Tweets.userTweets.query({id:$scope.userId}, function(){
+		$scope.user = $scope.tweets[0].user;
+	});
 });
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
