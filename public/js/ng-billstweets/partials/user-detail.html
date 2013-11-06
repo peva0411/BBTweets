@@ -24,22 +24,22 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-					<div class="panel panel-default">
+					<div class="panel panel-default center-text">
 						<div class="panel-heading">
 							Tweets
 						</div>
 						<div class="panel-body">
-							<h2>[[tweetCount[0].tweets]]</h2>
+							<h2  >[[tweetCount[0].tweets | number:0]]</h2>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="panel panel-default">
-						<div class="panel-heading">
+						<div class="panel-heading center-text">
 							Avg Sentiment
 						</div>
-						<div class="panel-body">
-							<h2>[[tweetCount[0].averageSent]]</h2>
+						<div class="panel-body center-text">
+							<h2 ng-class="{green:tweetCount[0].averageSent > 0, red : tweetCount[0].averageSent < 0}">[[tweetCount[0].averageSent | number:1]]</h2>
 						</div>
 					</div>
 				</div>
