@@ -7,6 +7,12 @@ module.exports = exports = function(app, db, io){
 
 	app.get('/', contentHandler.displayMainPage);
 
+	app.get('/tweets-api/tweets/:id', contentHandler.getTweet);
+
+	app.get('/tweets-api/tweets/user/:id', contentHandler.getUserTweets);
+
+	app.get('/tweets-api/tweets/userCount/:id', contentHandler.getUserTweetCount);
+
 	app.get('/tweets-api/count/:sentimentStatus', contentHandler.displayCount);
 
 	app.get('/tweets-api/tweets/:tweets/:skip/:year/:month/:day/:hours/:minutes/:seconds', contentHandler.displayTweets);

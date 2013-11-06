@@ -20,6 +20,16 @@ function ContentHandler(db){
 		});
 	}
 
+	this.getUserTweetCount = function(req, res, next){
+		"use strict";
+
+		tweets.getUserAverage(req.params.id, function(err, result){
+			if (err) return next(err);
+
+			return res.json(result);
+		});
+	}
+
 	this.displayTweets = function(req , res, next){
 		"use strict";
 		var numTweets = req.params.tweets;
@@ -45,6 +55,26 @@ function ContentHandler(db){
 
 		   return res.json(results);
 		  });
+	}
+
+	this.getTweet = function(req, res, next){
+		"use strict";
+
+		tweets.getTweet(req.params.id, function(err, results){
+			if (err) return next(err);
+
+			return res.json(results);
+		});
+	}
+
+	this.getUserTweets = function(req, res, next){
+		"use strict";
+
+		tweets.getUserTweets(req.params.id, function(err, results){
+			if (err) return next(err);
+
+			return res.json(results);
+		});
 	}
 
 }

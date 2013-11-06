@@ -1,0 +1,72 @@
+<div class="container" style="padding-top: 10px;">
+	<ol class="breadcrumb">
+		<li><a href="#">Tweets</a></li>
+		<li class="active">User Details</li>
+	</ol>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="media">
+								<a class="pull-left" href="#">
+									<img class="img-circle media-object" ng-src="[[user.profile_image_url]]">
+								</a>
+								<div class="media-body">
+									<h3 class="media-heading">[[user.name]]</h3>
+									<a href="#">[['@' + user.screen_name]]</a>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="panel panel-default center-text">
+						<div class="panel-heading">
+							Tweets
+						</div>
+						<div class="panel-body">
+							<h2  >[[tweetCount[0].tweets | number:0]]</h2>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading center-text">
+							Avg Sentiment
+						</div>
+						<div class="panel-body center-text">
+							<h2 ng-class="{green:tweetCount[0].averageSent > 0, red : tweetCount[0].averageSent < 0}">[[tweetCount[0].averageSent | number:1]]</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div ng-repeat="tweet in tweets">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div>
+							<div class="pull-right">[[tweet.date | date:'medium']]</div>
+							<div><span> Sentiment:  <span ng-class="{green:tweet.sentiment > 0, red : tweet.sentiment < 0}">[[tweet.sentiment]]</span></span></div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="media">
+							<div class="media-body">
+								[[tweet.text]]
+							</div>
+						</div>
+					<div>
+						<div class="pull-right">
+							<a href='#tweets/[[tweet.id]]'>Details</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

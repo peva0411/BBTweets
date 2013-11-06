@@ -3,8 +3,30 @@ var ngBBTweets = angular.module("ngBBTweets", ['ngResource',"tweet.socket-io", '
 		$interpolateProvider.endSymbol(']]');
 	});
 
+ngBBTweets.config(['$routeProvider', 
+	function($routeProvider){
+		$routeProvider.when('/tweets',{
+			templateUrl : 'js/ng-billstweets/partials/tweet-list.html',
+			controller: 'countCtrl'
+		}).
+		when('/tweets/:tweetId', {
+			templateUrl : 'js/ng-billstweets/partials/tweet-detail.html',
+			controller : 'tweetDetailCtrl'
+		}).
+		when('/users/:userId',{
+			templateUrl : 'js/ng-billstweets/partials/user-detail.html',
+			controller : 'userDetailCtrl'
+		}).
+		otherwise({
+			redirectTo: '/tweets'
+		});
+	}])
+
 ngBBTweets.factory("Tweets", function($resource){
 	return {
+		userTweets: $resource("/tweets-api/tweets/user/:id"),
+		userTweetCount: $resource("/tweets-api/tweets/userCount/:id"),
+		tweet: $resource("/tweets-api/tweets/:id"),
 		tweets : $resource("/tweets-api/tweets/:tweets/:skip/:milli"),
 		countPositive: $resource("/tweets-api/count/positive"),
 		countNegative: $resource("/tweets-api/count/negative"),
@@ -32,6 +54,31 @@ ngBBTweets.directive("tweetText", function(){
 			});
 		}
 	};
+});
+
+ngBBTweets.controller("tweetDetailCtrl", function tweetDetailCtrl($scope,$routeParams, Tweets){
+	$scope.tweetId = $routeParams.tweetId
+
+	$scope.styleImg = function(media){
+		return {
+			width:media.sizes.medium.w,
+			height:media.sizes.medium.h
+			}
+	}
+
+	//$scope.wordScores = $scope.tweet.positiveWords.concat($scope.tweet.negativeWords);
+	$scope.tweet = Tweets.tweet.get({id:$scope.tweetId});
+});
+
+ngBBTweets.controller('userDetailCtrl', function tweetUserCtrl($scope, $routeParams, Tweets){
+	$scope.userId = $routeParams.userId;
+	$scope.user = {};
+
+	$scope.tweetCount = Tweets.userTweetCount.query({id:$scope.userId});
+
+	$scope.tweets = Tweets.userTweets.query({id:$scope.userId}, function(){
+		$scope.user = $scope.tweets[0].user;
+	});
 });
 
 ngBBTweets.controller("countCtrl", function countCtrl($scope, Tweets, socket){
