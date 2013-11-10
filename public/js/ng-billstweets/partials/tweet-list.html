@@ -1,18 +1,18 @@
 <div>
 		 	<div class="row tweet-header">
-		 			<div class="col-md-4 linediv-l">
+		 			<div class="col-md-4 col-xs-12 linediv-l">
 		 				<div class="tweet-stat ">
 		 					<h2>[[countPositive.count | number]]</h2>
 		 					<p> Positive </p>	
 		 				</div>
 		 			</div>
-					<div class="col-md-4">
+					<div class="col-md-4 col-xs-12">
 						<div class="tweet-stat">
 							<h2>[[countTotal.count | number]]</h2>
 							<p>Total</p>
 						</div>
 					</div>
-					<div class="col-md-4 linediv-r">
+					<div class="col-md-4 col-xs-12 linediv-r">
 						<div class="tweet-stat">
 							<h2>[[countNegative.count | number]]</h2>
 							<p>Negative</p>
@@ -20,41 +20,45 @@
 					</div>
 		 	</div>
 
-			 	<div  style="padding: 20px;">
-
-				 	 <div class='well well-sm' ng-animate="'animate'" ng-show="needRefresh()">
-				 	 	<span>
-				 			<span class="badge">[[difference]]</span>
-				 			more tweets have been found. 
-				 			<btn class='btn btn-primary btn-bills' ng-click="refreshTweets()">Refresh</btn>
-				 		</span>	
-				 	</div> 
-					<div infinite-scroll='loadMore()' infinite-scroll-distance='2' style="margin-top:15px;">
-						<div ng-repeat="tweet in tweets">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<div>
-										<div class="pull-right">[[tweet.date | date:'medium']]</div>
-										<div><span> Sentiment:  <span ng-class="{green:tweet.sentiment > 0, red : tweet.sentiment < 0}">[[tweet.sentiment]]</span></span></div>
-									</div>
-								</div>
-								<div class="panel-body">
-									<div class="media">
-										<div class="pull-left tweet-divider">
-											<img class="media-object img-rounded" ng-src="[[tweet.user.profile_image_url]]"/>
-											<a href="#users/[[tweet.user.id]]">[['@' + tweet.user.screen_name]]</a> 
-										</div>
-										<div class="media-body">
-											[[tweet.text]]
+		 	<div  style="padding: 20px;">
+				<div class="row">
+					<div class="col-md-12">
+						<div class='well well-sm' ng-animate="'animate'" ng-show="needRefresh()">
+					 	 	<span>
+					 			<span class="badge">[[difference]]</span>
+					 			more tweets have been found. 
+					 			<btn class='btn btn-primary btn-bills' ng-click="refreshTweets()">Refresh</btn>
+					 		</span>	
+					 	</div> 
+						<div infinite-scroll='loadMore()' infinite-scroll-distance='2' style="margin-top:15px;">
+							<div ng-repeat="tweet in tweets">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<div>
+											<div class="pull-right">[[tweet.date | date:'medium']]</div>
+											<div><span> Sentiment:  <span ng-class="{green:tweet.sentiment > 0, red : tweet.sentiment < 0}">[[tweet.sentiment]]</span></span></div>
 										</div>
 									</div>
-								<div>
-									<div class="pull-right">
-										<a href='#tweets/[[tweet.id]]'>Details</a>
+									<div class="panel-body">
+										<div class="media">
+											<div class="pull-left tweet-divider">
+												<img class="media-object img-rounded" ng-src="[[tweet.user.profile_image_url]]"/>
+												<a href="#users/[[tweet.user.id]]">[['@' + tweet.user.screen_name]]</a> 
+											</div>
+											<div class="media-body">
+												[[tweet.text]]
+											</div>
+										</div>
+										<div>
+											<div class="pull-right">
+												<a href='#tweets/[[tweet.id]]'>Details</a>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
 </div>
